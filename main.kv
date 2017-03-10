@@ -1,0 +1,661 @@
+#:import RiseInTransition kivy.uix.screenmanager.RiseInTransition
+
+#: set TRANSPARENT [1, 1, 1, 0]
+#: set RED [0.98, 0.43, 0.31, 1]
+#: set GREEN [0.62, 0.83, 0.40, 1]
+#: set BLUE [0.231, 0.686, 0.855, 1]
+#: set DARK_BLUE [0.2627, 0.290, 0.3294, 1]
+#: set GREY_BLUE [0.6667, 0.698, 0.741176, 1]
+#: set WHITE [1, 1, 1, 1]
+#: set ULTRA_LIGHT_GREY [0.93, 0.93, 0.93, 1]
+#: set LIGHT_GREY [0.86, 0.86, 0.86, 1]
+#: set DARK_GREY [0.26, 0.29, 0.33, 1]
+#: set NAVY_BLUE [0,0.349,0.953,1]
+#:import KivyLexer kivy.extras.highlight.KivyLexer
+
+#: import ListAdapter kivy.adapters.listadapter.ListAdapter
+#: import main main
+<AppScreen>:
+	canvas.before:
+	    Color:
+	        rgb: .6, .6, .6
+	    Rectangle:
+	        size: self.size
+	        source: 'images/background.png'
+BoxLayout:
+	para: para
+	driver: driver
+	customer: customer
+	history: history
+	user: user
+	ScreenManager:
+		LoginForm:
+			id: login
+			txt_username: user	
+			txt_password: pwd
+			name: 'login'
+			BoxLayout:
+				orientation: 'vertical'
+				GridLayout:
+					cols:1
+					rows:4
+					row_default_height: 65
+					row_force_default:True
+					spacing: 20
+					padding: 40,150
+					TextInput:
+						id: user
+						color: 7, 9, 2, 0.2
+						hint_text:'Username'
+						focus: False
+						font_size:45
+					TextInput:
+		    			id: pwd
+					    color: 7, 9, 2, 0.2
+					    hint_text:'Password'
+					    focus:False
+					    password: True
+					    font_size:45
+
+					GridLayout:
+						cols:2
+						row_default_height: 65
+						row_force_default:True
+					    Button:
+						    id: 'btnlog'
+						    background_color: NAVY_BLUE
+						    text: 'Login'
+						    font_size: 45
+						    on_press: login.driver_login(user.text,pwd.text); driver.driver_info(user.text)  
+						Button:
+						    id: 'btncreate'
+						    background_color: NAVY_BLUE
+						    text: 'Admin'
+						    font_size: 45
+						    on_press: admin.manager.current = 'admin'
+				Image:
+					source: 'images/parataxi.png'
+					pos: self.pos
+					size: self.size
+		Admin:
+			id: admin
+			txt_username_admin: user_admin	
+			txt_password_admin: pwd_admin
+			name: 'admin'
+			BoxLayout:
+				orientation: 'vertical'
+				GridLayout:
+					cols:1
+					rows:4
+					row_default_height: 65
+					row_force_default:True
+					spacing: 20
+					padding: 40,150
+					TextInput:
+						id: user_admin
+						color: 7, 9, 2, 0.2
+						hint_text:'Username - Admin'
+						focus: False
+						font_size:45
+					TextInput:
+		    			id: pwd_admin
+					    color: 7, 9, 2, 0.2
+					    hint_text:'Password - Admin'
+					    focus:False
+					    password: True
+					    font_size:45
+
+					GridLayout:
+						cols:2
+						row_default_height: 65
+						row_force_default:True
+					    Button:
+						    id: 'btnlog'
+						    background_color: NAVY_BLUE
+						    text: 'Login'
+						    font_size: 45
+						    on_press: admin.admin_login(user_admin.text,pwd_admin.text) 
+						Button:
+						    id: 'Next'
+						    background_color: NAVY_BLUE
+						    text: 'Cancel'
+						    font_size: 45
+						    on_press: login.manager.current = 'login'
+
+		First:
+			id: first
+			name: 'First'
+			BoxLayout:
+				orientation: 'vertical'
+				GridLayout:
+					cols:1
+					rows:5
+					row_default_height: 35
+					row_force_default:True
+					spacing: 20
+					padding: 40,100
+					GridLayout:
+						cols:3
+						row_default_height: 35
+						row_force_default:True
+						TextInput:
+							id: lastname
+							hint_text: 'Last Name'
+							focus:False
+							font_size:18
+						TextInput:
+							id: firstname
+							hint_text: 'First Name'
+							focus:False
+							font_size:18
+						TextInput:
+							id: middlename
+							hint_text: 'Middle Name'
+							focus:False
+							font_size:18
+					TextInput:
+						id: email
+						hint_text: 'Email or Username'
+						focus:False
+						font_size:18
+					TextInput:
+						id: driver_password
+						hint_text: 'Password'
+						focus:False
+						font_size:18
+						password: True
+					TextInput:
+						id: driver_password_retype
+						hint_text: 'Re-type Password'
+						focus:False
+						font_size:18
+						password: True
+					GridLayout:
+						cols:2
+						row_default_height: 35
+						row_force_default:True
+						Button:
+						#background_color: [0,0.18,0.49,2]
+							background_color: NAVY_BLUE
+							id: next
+							text: 'Next'
+							font_size: 18
+							#on_press: first.manager.current = 'Second'
+							on_press: first.register_driver_form1(lastname.text,firstname.text,middlename.text,email.text,driver_password.text, driver_password_retype.text)
+						Button:
+							background_color:[0,0.349,0.953,1]
+							text: 'Cancel'
+							font_size: 18
+							on_press: admin.manager.current = 'admin'
+		Second:
+			id: second
+			name: 'second'
+			txt_tglMale: male
+			txt_tglFemale: female
+			txt_age: age
+			txt_address: address
+			txt_unitno: unitno
+			btn_register: next_2
+			BoxLayout:
+				orientation: 'vertical'
+				GridLayout:
+					cols:1
+					rows:6
+					row_default_height: 35
+					row_force_default:True
+					spacing: 20
+					padding: 40,100
+					BoxLayout:
+						orientation: 'vertical'
+						GridLayout:
+							cols: 4
+							Label:
+								text: first.user
+								font_size:18
+					GridLayout:
+						cols:2
+						row_default_height: 35
+						row_force_default:True
+						GridLayout:
+							cols:4
+							row_default_height: 35
+							row_force_default:True
+							padding: 100,0
+							Label:
+								text: 'Male'
+							CheckBox:
+								id: male
+								size_hint_y: None
+								height: '48dp'
+								group: 'g2'
+								text: 'Male'
+								active: True
+							Label:
+								text: 'Female'
+							CheckBox:
+								id: female
+								size_hint_y: None
+								height: '48dp'
+								group: 'g2'
+								text: 'Female'
+								active: False
+						TextInput:
+							id: age
+							hint_text: 'Age'
+							focus:False
+							font_size:18
+					TextInput:
+						id: address
+						hint_text: 'Address'
+						focus:False
+						font_size:18
+					TextInput:
+						id: unitno
+						hint_text: 'Plate No'
+						focus:False
+						font_size:18
+					TextInput:
+						id: licenceno
+						hint_text: "Driver's Licence No."
+						font_size:18
+					GridLayout:
+						cols:2
+						row_default_height: 35
+						row_force_default:True
+						Button:
+							id: next_2
+							background_color: NAVY_BLUE
+							text: 'Next'
+							font_size: 18
+							on_press: second.manager.current = 'third'
+							on_press: second.register_driver_form2(male,female,age.text,address.text,unitno.text,licenceno.text,first.user)
+						Button:
+							background_color:[0,0.349,0.953,1]
+							text: 'Back'
+							font_size: 18
+							on_press: first.manager.current = 'First'
+		Third:
+			id: third
+			name: 'third'
+			GridLayout:
+				cols: 1
+				cols:1
+				spacing: 20
+				padding: 40,150
+				Image:
+					size:self.size
+					source: second.info
+				GridLayout:
+					cols:1
+					row_default_height: 35
+					row_force_default:True
+					spacing: 20
+					TextInput:
+						id: dir_location
+						hint_text: second.info
+						font_size: 18
+						disabled: True
+					Button:
+						text: 'Open'
+						height: 35
+						on_press: second.show_load()
+				GridLayout:
+					cols:2
+					row_default_height: 35
+					row_force_default:True
+					Button:
+						id: register
+						background_color: NAVY_BLUE
+						text: 'Register'
+						font_size: 18
+						on_press: third.register_driver_form3(dir_location.text, first.user); login.manager.current = 'login'
+					Button:
+						background_color:[0,0.349,0.953,1]
+						text: 'Back'
+						font_size: 18
+						on_press: second.manager.current = 'second'
+
+		MainWindow:
+			id: mainwindow
+			name: 'mainwindow'
+			BoxLayout:
+				orientation: "vertical"
+				ToolbarV3:
+					BoxLayout:
+						orientation: 'horizontal'
+						BoxLayout:
+							orientation: 'vertical'
+							padding: 10
+					        Label:
+					            text: "Joannian Taxi Incorporated"
+					            font_name: './fonts/Lato-Black.ttf'
+					            font_size: 35
+					        Label:
+					            text: "J.P. Rizal Street, Marikina, Metro Manila"
+					            font_size: 20
+					        Label:
+					            text: " "
+					            font_size: 20
+
+				Toolbar:
+					pos_hint: {'top': 2}
+
+					Label:
+						text: " "
+			        Button:
+			        	background_color: WHITE
+						background_normal: './images/driver.png'
+						background_down: './images/driver_down.png'
+						border: 0, 0, 0, 0
+						size_hint: None, None
+	                    on_press: app.root.para.load_slide(root.driver)
+			        Button:
+			        	on_press: app.root.para.load_slide(app.root.customer)
+			        	background_color: WHITE
+						background_normal: './images/customer.png'
+						background_down: './images/customer_down.png'
+						border: 0, 0, 0, 0
+						size_hint: None, None
+
+					Button:
+						background_color: WHITE
+						background_normal: './images/history.png'
+						background_down: './images/history_down.png'
+						border: 0, 0, 0, 0
+						size_hint: None, None
+						on_release: app.root.para.load_slide(app.root.history)
+
+					Button:
+						background_color: WHITE
+						background_normal: './images/logout.png'
+						background_down: './images/logout_down.png'
+						border: 0, 0, 0, 0
+						size_hint: None, None
+						on_release: login.manager.current = 'login'
+
+					Button:
+						background_color: WHITE
+						background_normal: './images/exit.png'
+						background_down: './images/exit_down.png'
+						border: 0, 0, 0, 0
+						size_hint: None, None
+						on_release: mainwindow.show_load()
+
+					Button:
+				        background_color: WHITE
+						background_normal: './images/emerg.png'
+						#background_down: './images/emerg_down.png'
+						border: 0, 0, 0, 0
+						size_hint: None, None
+				        on_press: mainwindow.send_emergency(user.text); login.manager.current = 'login'; pwd.text = ''; user.text = '';
+
+				    Label:
+						text: " "
+
+							
+
+
+		        Carousel:
+		        	id: para
+		            Driver:
+						id: driver
+						name: 'driver'
+						BoxLayout:
+					    	orientation: "vertical"
+							BoxLayout:
+								Label:
+						            font_size: 18
+						        Label:
+						            font_size: 18
+						    BoxLayout:
+						    	orientation: 'horizontal'
+						        GridLayout:
+						        	cols: 1
+							        Label:
+							        	text: driver.name
+							        	font_name: './fonts/Lato-Black.ttf'
+							            font_size: 35
+							        Label:
+							            font_size: 15
+							        Label:
+							        	text: '(Authorized Driver)'
+							            font_size: 15
+							BoxLayout:
+								Label:
+						            text: "Driver's Licence No.:"
+						            font_size: 30
+						        Label:
+						        	text: driver.licno
+						            font_size: 30
+						    BoxLayout:
+						        Label:
+						            text: "Username:"
+						            font_size: 30
+						        Label:
+						        	text: login.user
+						            font_size: 30
+						    BoxLayout:
+						        Label:
+						            text: "Plate No.:"
+						            font_size: 30
+						        Label:
+						        	text: driver.unitno
+						            font_size: 30
+						    BoxLayout:
+						        Label:
+						            text: 'LTFRB Hotline:'
+						            font_size: 30
+						        Label:
+						        	text: '459-2135'
+						            font_size: 30
+						    BoxLayout:
+						        Label:
+						            text: 'DOTC Hotline:'
+						            font_size: 30
+						        Label:
+						        	text: '7890'
+						            font_size: 30
+						    BoxLayout:
+						        Label:
+						            text: 'LTO Law Enforcement:'
+						            font_size: 30
+						        Label:
+						        	text: '927-1651'
+						            font_size: 30
+						    BoxLayout:
+						        Label:
+						            text: 'DILG Emergency:'
+						            font_size: 30
+						        Label:
+						        	text: '117'
+						            font_size: 30
+						    BoxLayout:
+						        Label:
+						            text: 'PNP Text Hotline:'
+						            font_size: 30
+						        Label:
+						        	text: '2220'
+						            font_size: 30
+						    BoxLayout:
+						        orientation: "vertical"
+						        id: drivers
+					Customer:
+						id: customer
+					    orientation: "vertical"
+					    scrollview: scrollview
+					    ScrollableContainer:
+					        id: scrollview
+					        size: root.size
+					        pos: root.pos
+					        scroll_timeout: 75
+						    scroll_distance: 10
+						    app: app
+						    content_layout: content_layout
+						    GridLayout:
+						        id: content_layout
+						        cols: 1
+						        size_hint: (1.0, None)
+						        pos: root.pos
+						        height: self.minimum_height
+						        padding: 25
+						        spacing: 25
+					History:
+						id: history
+						name: 'history'
+						scrollview1: scrollview1
+						
+						BoxLayout:
+							orientation: 'vertical'
+
+						    ScrollableContainer1:
+						        id: scrollview1
+						        size: root.size
+						        pos: root.pos
+						        scroll_timeout: 75
+							    scroll_distance: 10
+							    app: app
+							    content_layout1: content_layout1
+							    GridLayout:
+							        id: content_layout1
+							        cols: 1
+							        size_hint: (1.0, None)
+							        pos: root.pos
+							        height: self.minimum_height
+							        padding: 25
+							        spacing: 25
+						    BoxLayout:
+						        orientation: "vertical"
+						        size_hint_y: None
+						        Button:
+									text: 'March 7, 2015 - Daily Transaction'
+									font_size: 30
+									background_color: NAVY_BLUE
+						        Button:
+						            text: "Refresh"
+						            font_size: 30
+						            on_press: history.refresh(login.user)
+
+				ToolbarV2:
+					BoxLayout:
+						orientation: 'horizontal'
+						Label:
+				            text: "ParaTaxi - " + login.user
+				            font_size: 25
+
+<CustomLabel1>:
+	id: customlabel1
+	on_press: root.execute(root.id);
+
+
+<LoadDialog>:
+    BoxLayout:
+        size: root.size
+        pos: root.pos
+        orientation: "vertical"
+        FileChooserListView:
+            id: filechooser
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            Button:
+                text: "Cancel"
+                on_release: root.cancel()
+            Button:
+                text: "Load"
+                on_release: root.load(filechooser.path, filechooser.selection)
+<ExitDialog>:
+	BoxLayout:
+		size: root.size
+		pos: root.pos
+        orientation: "vertical"
+        Label:
+        	font_size: 50
+        	text: 'Do you really want to exit?'
+        BoxLayout:
+        	size_hint_y: None
+            Button:
+            	font_size: 30
+                text: "Yes"
+                on_press: root.exit_app()
+            Button:
+            	font_size: 30
+                text: "No"
+                on_press: root.cancel()
+<Toolbar@BoxLayout>:
+    size_hint_y: None
+    height: '60dp'
+    padding: '1dp'
+    spacing: '4dp'
+    canvas:
+        Color:
+        	rgba: TRANSPARENT
+        Rectangle:
+            pos: self.pos
+            size: self.size
+<ToolbarV2@BoxLayout>:
+    size_hint_y: None
+    height: '48dp'
+    padding: '1dp'
+    spacing: '4dp'
+    canvas:
+        Color:
+            rgba: .2, .2, .2, .6
+        Rectangle:
+            pos: self.pos
+            size: self.size
+<ToolbarV3@BoxLayout>:
+    size_hint_y: None
+    height: '150dp'
+    padding: '1dp'
+    spacing: '4dp'
+    canvas:
+        Color:
+            rgba: .2, .2, .2, .6
+        Rectangle:
+            pos: self.pos
+            size: self.size
+<LoadDialogInfo>:
+	id: loaddialoginfo
+	BoxLayout:
+        size: root.size
+        pos: root.pos
+        orientation: "vertical"
+        BoxLayout:
+        	orientation: 'horizontal'
+        	
+		    BoxLayout:
+	        	orientation: 'vertical'
+	        	padding: 20,20
+	        	BoxLayout:
+	        		orientation: 'vertical'
+			        Label:
+			        	text: 'Customer Name'
+			        	font_size: 40
+			        	font_name: './fonts/Lato-Black.ttf'
+			        Label:
+			        	font_size: 40
+			        	text: loaddialoginfo.firstname + ' ' +loaddialoginfo.lastname
+			    BoxLayout:
+			    	orientation: 'vertical'
+			        Label:
+			        	font_size: 40
+			        	text: 'Current Location'
+			        	font_name: './fonts/Lato-Black.ttf'
+			        Label:
+			        	font_size: 25
+			        	text: loaddialoginfo.locationfrom
+			    BoxLayout:
+			    	orientation: 'vertical'
+			        Label:
+			        	font_size: 40
+			        	text: 'Destination'
+			        	font_name: './fonts/Lato-Black.ttf'
+			        Label:
+			        	font_size: 25
+			        	text: loaddialoginfo.locationto
+			    BoxLayout:
+			    	Button:
+			    		text: 'Destination Reached'
+			    		font_size: 25
+			    		on_press: root.done(loaddialoginfo.lastname, loaddialoginfo.firstname);root.cancel1();
+
